@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -24,10 +25,12 @@ public class MainActivity extends AppCompatActivity {
         TextView tView = findViewById(R.id.textView);
         RadioGroup rg = findViewById(R.id.radioGroup);
         RadioButton checkedRadioButton = (RadioButton) rg.findViewById(rg.getCheckedRadioButtonId());
+        Button nextButton = findViewById(R.id.nextButton);
 
         String correctAnswer;
         correctAnswer = renderRandomImage(tView);
-        // Event listener on radio group and child buttons
+
+        //Set event listeners on radio group child buttons
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int id) {
@@ -35,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
                 String userAnswer = checkedRadioButton.getText().toString();
 
                 evaluateAnswer(correctAnswer, userAnswer);
+            }
+        });
+
+//        Set click listener on nextButton
+        // FIXME: does not update correctAnswer var;
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                renderRandomImage(tView);
             }
         });
 
@@ -65,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             default:
                 Log.i(TAG, "Something horrible has happened");
         }
+        ;
 //        Log.i(TAG, " " + correctResponse);
         return correctResponse;
     }
